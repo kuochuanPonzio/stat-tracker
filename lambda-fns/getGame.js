@@ -3,18 +3,18 @@ const ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
 
 exports.handler = (event, context, callback) => {
   
-  const eventParams = event.queryStringParameters;
-  const tableName = eventParams.tableName;
-  const keyName = eventParams.keyName;
-  const keyType = eventParams.keyType;
-  const value = eventParams.value;
+  const eventParams = event['queryStringParameters'];
+  const tableName = eventParams['tableName'];
+  const keyName = eventParams['keyName'];
+  const keyType = eventParams['keyType'];
+  const value = eventParams['value'];
   
-  const params = {
-    TableName: tableName,
-    Key: {
-      keyName: { keyType : value },
-    },
-  };
+  const params = JSON.parse(`{
+    "TableName": "${tableName}",
+    "Key": {
+      "${keyName}": { "${keyType}" : "${value}" }
+    }
+  }`)
   
   console.log(params)
   
